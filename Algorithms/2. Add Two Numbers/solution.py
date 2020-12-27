@@ -1,7 +1,6 @@
 # -*- coding: utf-8 -*-
 __author__ = 'Shane_Kao'
 # Definition for singly-linked list.
-import functools
 
 
 class ListNode(object):
@@ -21,34 +20,34 @@ class ListNode(object):
 
 class Solution(object):
     @staticmethod
-    def carry_digit(l):
-        while any([i >= 10 for i in l]):
-            for i, j in enumerate(l):
-                if j >= 10:
-                    l[i] = j - 10
-                    try:
-                        l[i + 1] += 1
-                    except IndexError:
-                        l.append(1)
-                    break
-        return l
+    def set_next(l, val):
+        l_ = l
+        while True:
+            next_ = l_.next
+            if next_ is None:
+                return setattr(l_, 'next', val)
+            l_ = l_.next
 
     def addTwoNumbers(self, l1, l2):
-        result_list = []
+        list_node = None
+        extra_val = 0
         while True:
             l1_val = l1.val if l1 is not None else 0
             l2_val = l2.val if l2 is not None else 0
             if l1 is None and l2 is None:
+                if extra_val:
+                    self.set_next(list_node, ListNode(val=extra_val))
                 break
-            sum_val = l1_val + l2_val
-            result_list.append(sum_val)
+            sum_val = l1_val + l2_val + extra_val
+            val_ = sum_val % 10
+            extra_val = int(sum_val/10)
+            if list_node is None:
+                list_node = ListNode(val=val_)
+            else:
+                self.set_next(list_node, ListNode(val=val_))
             l1 = l1.next if l1 is not None else l1
             l2 = l2.next if l2 is not None else l2
-        result_list = self.carry_digit(result_list)
-        list_node_ = None
-        for i in reversed(result_list):
-            list_node_ = ListNode(val=i, next=list_node_)
-        return list_node_
+        return list_node
 
 
 if __name__ == '__main__':
