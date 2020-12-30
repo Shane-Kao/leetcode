@@ -13,12 +13,7 @@ class Solution:
                         output += 1
                     sub_string += current_
                 else:
-                    if current_ == sub_string[0]:
-                        sub_string = sub_string[1:] + current_
-                    elif current_ == sub_string[-1]:
-                        sub_string = current_
-                    else:
-                        sub_string = sub_string[sub_string.index(current_) + 1:] + current_
+                    sub_string = sub_string[sub_string.index(current_) + 1:] + current_
             except StopIteration:
                 return output
 
