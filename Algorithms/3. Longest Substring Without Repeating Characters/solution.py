@@ -1,31 +1,33 @@
 # -*- coding: utf-8 -*-
 __author__ = 'Shane_Kao'
+
+
 class Solution:
     def lengthOfLongestSubstring(self, s: str) -> int:
         output = 0
-        g = (i for i in s)
-        sub_string = ""
-        while True:
-            try:
-                current_ = next(g)
-                if current_ not in sub_string:
-                    if output <= len(sub_string):
-                        output += 1
-                    sub_string += current_
-                else:
-                    sub_string = sub_string[sub_string.index(current_) + 1:] + current_
-            except StopIteration:
-                return output
+        start_idx_ = 0
+        for i, j in enumerate(s):
+            if j not in s[start_idx_: i]:
+                if output <= i - start_idx_:
+                    output += 1
+            else:
+                start_idx_ += s[start_idx_: i].index(j) + 1
+        return output
 
 
 if __name__ == '__main__':
+    import time
     f = Solution().lengthOfLongestSubstring
-    print(f("abcabcbb")) #3 abc
-    print(f("bbbbb")) #1
-    print(f("pwwkew")) #3 wke
-    print(f("")) #0
-    print(f("aab")) #2
-    print(f("dvdf")) #3
-    print(f("tmmzuxt")) #5
-    print(f("ohvhjdml")) #6
-    print(f("wobgrovw")) #6
+    start_ = time.time()
+    for _ in range(1000):
+        assert f("abcabcbb") == 3 #3 abc
+        assert f("bbbbb") == 1 #1
+        assert f("pwwkew") == 3 #3 wke
+        assert f("") == 0 #0
+        assert f("aab") == 2 #2
+        assert f("dvdf") == 3 #3
+        assert f("tmmzuxt") == 5 #5
+        assert f("ohvhjdml") == 6 #6
+        assert f("wobgrovw") == 6 #6
+        assert f("ggububgvfk") == 6  # 6
+    print(time.time() - start_)
