@@ -20,9 +20,10 @@ class Solution:
                         sub_nums1 = [sub_nums1[0], n]
                 else:
                     if n >= sub_nums1[1]:
-                        pass
+                        sub_nums1 = [sub_nums1[1], n] if nums1_len%2 == 1 else sub_nums1
                     elif n <= sub_nums1[0]:
-                        pass
+                        sub_nums1 = sub_nums1
+                        # sub_nums1 = [n, sub_nums1[0]] if nums1_len%2 == 1 else sub_nums1
                     else:
                         sub_nums1 = [n, sub_nums1[1]] if nums1_len%2 == 1 else [sub_nums1[0], n]
             except IndexError:
@@ -31,6 +32,9 @@ class Solution:
 
 if __name__ == '__main__':
     f = Solution().findMedianSortedArrays
+    assert (f([0, 0], [0, 0]) == 0.0)
+    assert (f([1, 3], [2]) == 2.0)
+    assert (f([1, 2], [3, 4]) == 2.5)
     assert (f([100], [2, 101]) == 100.0)
     assert (f([100], [2, 3]) == 3.0)
     assert(f([1], [2, 3]) == 2.0)
@@ -40,11 +44,10 @@ if __name__ == '__main__':
     assert(f([1, 3, 3, 78], [3]) == 3.0)
     assert(f([1, 3, 10], [9]) == 6.0)
     assert(f([1, 3, 10], [11]) == 6.5)
-    print(f([1, 3, 10], [11, 100]))
     assert (f([1, 3, 10], [11, 100]) == 10.0)
     assert(f([3, 10], [9]) == 9.0)
     assert (f([3, 10], [1]) == 3.0)
+    print(f([3, 10], [2, 11]))
     assert (f([3, 10], [2, 11]) == 6.5)
-    print(f([3, 10], [11]))
     assert(f([3, 10], [11]) == 10.0)
 
