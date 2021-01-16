@@ -12,8 +12,6 @@ class Solution:
                 return curr_
 
 
-
-
 if __name__ == '__main__':
     f = Solution().longestPalindrome
     # print(f('babad'))
