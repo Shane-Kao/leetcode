@@ -1,8 +1,5 @@
 # -*- coding: utf-8 -*-
 __author__ = 'Shane_Kao'
-import math
-import bisect
-from typing import List
 
 
 class Solution:
