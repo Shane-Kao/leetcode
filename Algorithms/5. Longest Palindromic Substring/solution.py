@@ -8,7 +8,7 @@ from typing import List
 class Solution:
     def longestPalindrome(self, s: str) -> str:
         N = len(s)
-        g = (s[i: i + len_] for len_ in reversed(range(1, N + 1)) for i in range(N - len_ + 1))
+        g = (s[i: i + len_] for len_ in range(N, 0, -1) for i in range(N - len_ + 1))
         while True:
             curr_ = next(g)
             if curr_ == curr_[::-1]:
