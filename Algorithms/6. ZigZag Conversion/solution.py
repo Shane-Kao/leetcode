@@ -1,45 +1,32 @@
 # -*- coding: utf-8 -*-
 __author__ = 'Shane_Kao'
-import numpy as np
+
 
 class Solution:
-    def _get_batch_size(self, numRows):
-        return 2 * numRows - 2
-
-    def _batch(self, iterable_, n):
-        l = len(iterable_)
-        for ndx in range(0, l, n):
-            yield iterable_[ndx:min(ndx + n, l)]
-
-    def _get_sub_matrix(self, s, numRows):
-        X = np.array([[None] * (numRows - 1) for _ in range(numRows)])
-        for idx, _ in enumerate(range(numRows - 1)):
-            if idx == 0:
-                if len(s) > numRows:
-                    X[:, 0] = list(s[:numRows])
-                else:
-                    X[0:len(s), 0] = list(s)
+    def _get_index(self, input_string, row_idx, numRows):
+        output_string = ''
+        length_ = len(input_string)
+        col_idx = 1
+        ele = row_idx
+        while True:
+            if ele > length_ - 1:
+                break
+            output_string += input_string[ele]
+            if row_idx == 0 or row_idx == numRows - 1:
+                ele += (2 * numRows - 2)
             else:
-                try:
-                    X[numRows - idx - 1, idx] = s[numRows + idx - 1]
-                except IndexError:
-                    pass
-        return X
+                ele += (2 * numRows - 2 - 2 * row_idx) if col_idx % 2 == 1 else 2 * row_idx
+            col_idx += 1
+        return output_string
 
     def convert(self, s: str, numRows: int) -> str:
         if numRows == 1:
             return s
         else:
-            s_ = ''
-            batch_size = self._get_batch_size(numRows=numRows)
-            X = None
-            for i, j in enumerate(self._batch(s, n=batch_size)):
-                X_ = self._get_sub_matrix(j, numRows)
-                X = np.column_stack((X, X_)) if X is not None else X_
-
-            for idx in range(X.shape[0]):
-                s_ += ''.join([i for i in X[idx] if i is not None])
-            return s_
+            output_string = ''
+            for row_idx in range(numRows):
+                output_string += self._get_index(input_string=s, row_idx=row_idx, numRows=numRows)
+            return output_string
 
 
 if __name__ == '__main__':
@@ -47,7 +34,5 @@ if __name__ == '__main__':
     assert (f('A', 1) == 'A')
     assert (f("PAYPALISHIRING", 3) == "PAHNAPLSIIGYIR")
     assert (f("PAYPALISHIRING", 4) == "PINALSIGYAHRPI")
-
-
 
 
