@@ -3,7 +3,6 @@ import math
 
 class Solution:
     def reverse(self, x: int) -> int:
-
         output = 0
         pow_ = 0
         x_ = abs(x)
